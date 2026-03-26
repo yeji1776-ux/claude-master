@@ -1,0 +1,192 @@
+'use client';
+
+import { useState, useEffect, use } from 'react';
+import { useRouter } from 'next/navigation';
+import { tips } from '@/data/tips';
+import { CATEGORY_COLORS } from '@/types';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+
+export default function TipPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  const router = useRouter();
+  const tipId = parseInt(id);
+  const tip = tips.find(t => t.id === tipId);
+  const [completedTips, setCompletedTips] = useLocalStorage<number[]>('claude-master-completed', []);
+  const [quizAnswer, setQuizAnswer] = useState<'bad' | 'good' | null>(null);
+  const [showQuizResult, setShowQuizResult] = useState(false);
+
+  // Randomize quiz order
+  const [quizOrder, setQuizOrder] = useState<['bad', 'good'] | ['good', 'bad']>(['bad', 'good']);
+
+  useEffect(() => {
+    setQuizOrder(Math.random() > 0.5 ? ['bad', 'good'] : ['good', 'bad']);
+    setQuizAnswer(null);
+    setShowQuizResult(false);
+  }, [tipId]);
+
+  if (!tip) {
+    return (
+      <div className="mx-auto max-w-[520px] min-h-dvh px-4 flex items-center justify-center">
+        <p className="text-text-muted">팁을 찾을 수 없습니다.</p>
+      </div>
+    );
+  }
+
+  const isCompleted = completedTips.includes(tipId);
+  const prevTip = tips.find(t => t.id === tipId - 1);
+  const nextTip = tips.find(t => t.id === tipId + 1);
+  const color = CATEGORY_COLORS[tip.category];
+
+  const toggleComplete = () => {
+    if (isCompleted) {
+      setCompletedTips(prev => prev.filter(id => id !== tipId));
+    } else {
+      setCompletedTips(prev => [...prev, tipId]);
+    }
+  };
+
+  const handleQuizSelect = (answer: 'bad' | 'good') => {
+    setQuizAnswer(answer);
+    setShowQuizResult(true);
+  };
+
+  const quizPrompts = {
+    [quizOrder[0]]: quizOrder[0] === 'bad' ? tip.bad : tip.good,
+    [quizOrder[1]]: quizOrder[1] === 'bad' ? tip.bad : tip.good,
+  };
+
+  return (
+    <div className="mx-auto max-w-[520px] min-h-dvh px-4 py-6 animate-fadeIn">
+      {/* Header */}
+      <button
+        onClick={() => router.back()}
+        className="mb-4 flex items-center gap-1 text-sm text-text-muted hover:text-gold transition-colors"
+      >
+        ← 목록으로
+      </button>
+
+      {/* Tip Header */}
+      <div className="mb-6">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="rounded-full bg-card px-2.5 py-0.5 text-xs font-bold text-gold">
+            #{tip.id}
+          </span>
+          <span
+            className="rounded-full px-2.5 py-0.5 text-xs font-medium"
+            style={{ backgroundColor: color + '20', color }}
+          >
+            {tip.category}
+          </span>
+        </div>
+        <h1 className="text-xl font-bold text-white">{tip.title}</h1>
+        <p className="text-sm text-text-secondary mt-1">{tip.desc}</p>
+      </div>
+
+      {/* Lesson */}
+      <section className="mb-6 rounded-xl border border-border bg-card p-4">
+        <h2 className="text-sm font-semibold text-gold mb-2">📖 쉬운 설명</h2>
+        <p className="text-sm text-text-secondary leading-relaxed">{tip.lesson}</p>
+      </section>
+
+      {/* Bad Example */}
+      <section className="mb-4 rounded-xl border border-red/30 bg-red/5 p-4">
+        <h2 className="text-sm font-semibold text-red mb-2">❌ 나쁜 예시</h2>
+        <p className="text-sm text-text-secondary leading-relaxed font-mono bg-background/50 rounded-lg p-3">
+          {tip.bad}
+        </p>
+      </section>
+
+      {/* Good Example */}
+      <section className="mb-6 rounded-xl border border-green-500/30 bg-green-500/5 p-4">
+        <h2 className="text-sm font-semibold text-green-400 mb-2">✅ 좋은 예시</h2>
+        <p className="text-sm text-text-secondary leading-relaxed font-mono bg-background/50 rounded-lg p-3">
+          {tip.good}
+        </p>
+      </section>
+
+      {/* Practice */}
+      <section className="mb-6 rounded-xl border border-gold/30 bg-gold/5 p-4">
+        <h2 className="text-sm font-semibold text-gold mb-2">🎯 실습 과제</h2>
+        <p className="text-sm text-text-secondary leading-relaxed">{tip.practice}</p>
+      </section>
+
+      {/* Quiz */}
+      <section className="mb-6 rounded-xl border border-border bg-card p-4">
+        <h2 className="text-sm font-semibold text-gold mb-3">🧠 퀴즈: 어떤 프롬프트가 더 효과적일까?</h2>
+        <div className="space-y-3">
+          {quizOrder.map((type, index) => {
+            const isSelected = quizAnswer === type;
+            const isCorrect = type === 'good';
+            let borderClass = 'border-border';
+            if (showQuizResult) {
+              borderClass = isCorrect ? 'border-green-500' : 'border-red/50';
+            } else if (isSelected) {
+              borderClass = 'border-gold';
+            }
+
+            return (
+              <button
+                key={type}
+                onClick={() => !showQuizResult && handleQuizSelect(type)}
+                disabled={showQuizResult}
+                className={`w-full rounded-lg border ${borderClass} bg-background/50 p-3 text-left transition-all ${
+                  !showQuizResult ? 'hover:border-gold/50' : ''
+                }`}
+              >
+                <span className="text-xs text-text-muted mb-1 block">프롬프트 {index + 1}</span>
+                <p className="text-sm text-text-secondary font-mono">
+                  {type === 'bad' ? tip.bad : tip.good}
+                </p>
+                {showQuizResult && (
+                  <p className={`text-xs mt-2 font-medium ${isCorrect ? 'text-green-400' : 'text-red'}`}>
+                    {isCorrect ? '✅ 정답! 이 프롬프트가 더 효과적이에요' : '❌ 이 프롬프트는 개선이 필요해요'}
+                  </p>
+                )}
+              </button>
+            );
+          })}
+        </div>
+        {showQuizResult && (
+          <button
+            onClick={() => { setQuizAnswer(null); setShowQuizResult(false); setQuizOrder(Math.random() > 0.5 ? ['bad', 'good'] : ['good', 'bad']); }}
+            className="mt-3 text-xs text-gold hover:underline"
+          >
+            다시 풀기
+          </button>
+        )}
+      </section>
+
+      {/* Complete Button */}
+      <button
+        onClick={toggleComplete}
+        className={`w-full rounded-xl py-3 text-sm font-semibold transition-all active:scale-[0.98] ${
+          isCompleted
+            ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+            : 'bg-gradient-to-r from-gold to-red text-black'
+        }`}
+      >
+        {isCompleted ? '✅ 학습 완료!' : '✅ 학습 완료 표시'}
+      </button>
+
+      {/* Navigation */}
+      <div className="flex justify-between mt-6 pb-8">
+        {prevTip ? (
+          <button
+            onClick={() => router.push(`/tip/${prevTip.id}`)}
+            className="text-sm text-text-muted hover:text-gold transition-colors"
+          >
+            ← 이전: {prevTip.title}
+          </button>
+        ) : <div />}
+        {nextTip ? (
+          <button
+            onClick={() => router.push(`/tip/${nextTip.id}`)}
+            className="text-sm text-text-muted hover:text-gold transition-colors"
+          >
+            다음: {nextTip.title} →
+          </button>
+        ) : <div />}
+      </div>
+    </div>
+  );
+}
