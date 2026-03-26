@@ -3,14 +3,6 @@
 
 @theme inline {
   --color-background: #0A0A0F;
-  --color-card: #12121A;
-  --color-card-hover: #1A1A25;
-  --color-border: #1E1E2E;
-  --color-gold: #F59E0B;
-  --color-red: #EF4444;
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #9CA3AF;
-  --color-text-muted: #6B7280;
   --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
@@ -44,6 +36,22 @@ body {
 
 .animate-fadeInUp {
   animation: fadeInUp 0.5s ease-out;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.glass-hover:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.glow-amber {
+  box-shadow: 0 0 20px rgba(245,158,11,0.15);
 }
 
 /* Custom scrollbar */

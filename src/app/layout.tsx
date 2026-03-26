@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Providers from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "클로드 마스터 - AI 활용 100가지 팁",
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="ko" className="dark">
       <body className="min-h-dvh bg-background font-sans antialiased">
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

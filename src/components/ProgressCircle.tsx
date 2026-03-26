@@ -20,6 +20,13 @@ export default function ProgressCircle({ completed, total }: ProgressCircleProps
               <stop offset="0%" stopColor="#F59E0B" />
               <stop offset="100%" stopColor="#EF4444" />
             </linearGradient>
+            <filter id="progressGlow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
           </defs>
           {/* Background circle */}
           <circle
@@ -27,7 +34,7 @@ export default function ProgressCircle({ completed, total }: ProgressCircleProps
             cy="90"
             r={radius}
             fill="none"
-            stroke="#1E1E2E"
+            stroke="rgba(255,255,255,0.05)"
             strokeWidth="8"
           />
           {/* Progress circle */}
@@ -43,15 +50,16 @@ export default function ProgressCircle({ completed, total }: ProgressCircleProps
             strokeDashoffset={strokeDashoffset}
             transform="rotate(-90 90 90)"
             className="transition-all duration-700 ease-out"
+            filter="url(#progressGlow)"
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="text-3xl font-bold text-white">{completed}</span>
-          <span className="text-sm text-text-secondary">/ {total} 완료</span>
+          <span className="text-sm text-white/70">/ {total} 완료</span>
         </div>
       </div>
-      <p className="text-sm text-text-secondary">
-        전체 진행률 <span className="font-semibold text-gold">{Math.round(percentage)}%</span>
+      <p className="text-sm text-white/70">
+        전체 진행률 <span className="font-semibold text-amber-400">{Math.round(percentage)}%</span>
       </p>
     </div>
   );
