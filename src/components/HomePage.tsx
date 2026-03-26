@@ -4,79 +4,127 @@ import { useMemo } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { tips } from '@/data/tips';
 import { useTimer } from '@/contexts/TimerContext';
+import ProgressCircle from './ProgressCircle';
+import CheckInBanner from './CheckInBanner';
 
-export default function HomePage() {
+interface HomePageProps {
+  onTabChange: (tab: string, subTab?: string) => void;
+}
+
+const quickAccess = [
+  { id: 'learn', emoji: '📚', label: '학습', tab: 'learn' },
+  { id: 'timer', emoji: '⏱️', label: '타이머', tab: 'tools', subTab: 'timer' },
+  { id: 'calendar', emoji: '📅', label: '캘린더', tab: 'my', subTab: 'calendar' },
+  { id: 'memo', emoji: '📝', label: '메모', tab: 'tools', subTab: 'memo' },
+  { id: 'portfolio', emoji: '💼', label: '포트폴리오', tab: 'my', subTab: 'portfolio' },
+  { id: 'reference', emoji: '🛸', label: '레퍼런스', tab: 'reference' },
+];
+
+export default function HomePage({ onTabChange }: HomePageProps) {
   const [completedTips] = useLocalStorage<number[]>('claude-master-completed', []);
-  const { todayMinutes } = useTimer();
+  const [bookmarks] = useLocalStorage<number[]>('claude-master-bookmarks', []);
+  const { isRunning, timeLeft, mode, todayMinutes } = useTimer();
 
   const percentage = useMemo(() => Math.round((completedTips.length / 100) * 100), [completedTips]);
 
-  const recentTips = useMemo(() => {
-    return tips
-      .filter(t => !completedTips.includes(t.id))
-      .slice(0, 3);
-  }, [completedTips]);
+  const recentBookmarks = useMemo(() => {
+    return bookmarks.slice(-3).reverse().map(id => tips.find(t => t.id === id)).filter(Boolean);
+  }, [bookmarks]);
+
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
 
   return (
-    <div className="space-y-6 animate-fadeIn">
-      {/* Welcome */}
+    <div className="space-y-5 animate-fadeIn">
+      {/* Header */}
       <div className="text-center pt-4">
         <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-400 to-red-500 bg-clip-text text-transparent">
           클로드 마스터
         </h1>
-        <p className="text-sm text-white/40 mt-1">AI 활용 100가지 팁</p>
+        <p className="text-xs text-white/40 mt-1">AI 활용 100가지 팁 - 8주 마스터</p>
+      </div>
+
+      {/* Check-in Banner */}
+      <CheckInBanner />
+
+      {/* Progress Circle */}
+      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+        <ProgressCircle completed={completedTips.length} total={100} />
       </div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-3 gap-3">
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 text-center">
-          <p className="text-2xl font-bold text-amber-400">{completedTips.length}</p>
-          <p className="text-xs text-white/40 mt-1">완료한 팁</p>
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-3 text-center">
+          <p className="text-xl font-bold text-amber-400">{completedTips.length}</p>
+          <p className="text-[11px] text-white/40 mt-0.5">완료한 팁</p>
         </div>
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 text-center">
-          <p className="text-2xl font-bold text-white">{percentage}%</p>
-          <p className="text-xs text-white/40 mt-1">진행률</p>
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-3 text-center">
+          <p className="text-xl font-bold text-emerald-400">{todayMinutes}<span className="text-xs">분</span></p>
+          <p className="text-[11px] text-white/40 mt-0.5">오늘 집중</p>
         </div>
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 text-center">
-          <p className="text-2xl font-bold text-emerald-400">{todayMinutes}</p>
-          <p className="text-xs text-white/40 mt-1">오늘 학습(분)</p>
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-3 text-center">
+          <p className="text-xl font-bold text-purple-400">{bookmarks.length}</p>
+          <p className="text-[11px] text-white/40 mt-0.5">북마크</p>
         </div>
       </div>
 
-      {/* Progress Bar */}
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-white/80 text-sm font-semibold">전체 진행률</span>
-          <span className="text-amber-400 text-sm font-bold">{percentage}%</span>
-        </div>
-        <div className="h-3 w-full rounded-full bg-white/10 overflow-hidden">
-          <div
-            className="h-full rounded-full bg-gradient-to-r from-amber-500 to-red-500 transition-all duration-700"
-            style={{ width: `${percentage}%` }}
-          />
-        </div>
-        <p className="text-xs text-white/40 mt-2">{completedTips.length}/100 팁 완료</p>
-      </div>
-
-      {/* Next Up */}
-      <div>
-        <h2 className="text-white/80 text-sm font-semibold mb-3">📋 다음에 학습할 팁</h2>
-        <div className="space-y-2">
-          {recentTips.map(tip => (
-            <div key={tip.id} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-3 hover:bg-white/10 hover:border-white/20 transition-all">
-              <div className="flex items-center gap-3">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-white/40">
-                  {tip.id}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-white truncate">{tip.title}</p>
-                  <p className="text-xs text-white/40 truncate">{tip.desc}</p>
-                </div>
+      {/* Mini Timer (if running) */}
+      {isRunning && (
+        <div className="bg-white/5 backdrop-blur-xl border border-amber-500/30 rounded-2xl p-4 glow-amber">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="text-xl">{mode === 'focus' ? '🎯' : '☕'}</span>
+              <div>
+                <p className="text-sm font-medium text-white">
+                  {mode === 'focus' ? '집중 모드' : '휴식 모드'}
+                </p>
+                <p className="text-xs text-white/40">진행 중</p>
               </div>
             </div>
+            <p className="text-2xl font-mono font-bold text-amber-400 tabular-nums">
+              {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Quick Access Grid */}
+      <div>
+        <h2 className="text-white/60 text-sm font-semibold mb-3">빠른 접근</h2>
+        <div className="grid grid-cols-3 gap-3">
+          {quickAccess.map(item => (
+            <button
+              key={item.id}
+              onClick={() => onTabChange(item.tab, item.subTab)}
+              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 text-center hover:bg-white/10 hover:border-white/20 transition-all active:scale-95"
+            >
+              <span className="text-2xl block mb-1">{item.emoji}</span>
+              <span className="text-xs text-white/70 font-medium">{item.label}</span>
+            </button>
           ))}
         </div>
       </div>
+
+      {/* Recent Bookmarks */}
+      {recentBookmarks.length > 0 && (
+        <div>
+          <h2 className="text-white/60 text-sm font-semibold mb-3">최근 북마크</h2>
+          <div className="space-y-2">
+            {recentBookmarks.map(tip => tip && (
+              <button
+                key={tip.id}
+                onClick={() => { window.location.href = `/tip/${tip.id}`; }}
+                className="w-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-3 text-left hover:bg-white/10 hover:border-white/20 transition-all"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-amber-400 text-xs font-bold">#{tip.id}</span>
+                  <p className="text-sm text-white truncate">{tip.title}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Motivational Card */}
       <div className="bg-gradient-to-br from-amber-500/10 to-red-500/10 border border-amber-500/20 rounded-2xl p-5 text-center">

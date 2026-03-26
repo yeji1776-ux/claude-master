@@ -65,7 +65,14 @@ export default function Home() {
   return (
     <div className="mx-auto max-w-[520px] min-h-dvh px-4 pb-24">
       {/* Home Tab */}
-      {activeTab === 'home' && <HomePage />}
+      {activeTab === 'home' && (
+        <HomePage onTabChange={(tab, subTab) => {
+          setActiveTab(tab as MainTab);
+          if (tab === 'tools' && subTab) setToolsSubTab(subTab);
+          if (tab === 'my' && subTab) setMySubTab(subTab);
+          if (tab === 'reference' && subTab) setReferenceSubTab(subTab);
+        }} />
+      )}
 
       {/* Learn Tab */}
       {activeTab === 'learn' && <LearningTab />}
