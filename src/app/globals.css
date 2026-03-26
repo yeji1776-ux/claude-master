@@ -2,7 +2,6 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
 
 @theme inline {
-  --color-background: #0A0A0F;
   --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
@@ -13,11 +12,12 @@
 }
 
 body {
-  background: #0A0A0F;
-  color: #FFFFFF;
   font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #E8D5F5 0%, #FCE7F3 25%, #DBEAFE 50%, #E0E7FF 75%, #F3E8FF 100%);
+  background-attachment: fixed;
+  min-height: 100dvh;
 }
 
 @keyframes fadeIn {
@@ -38,35 +38,34 @@ body {
   animation: fadeInUp 0.5s ease-out;
 }
 
-/* Glassmorphism utilities */
 .glass {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.6);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.1);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
 }
 
 .glass-hover:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.7);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
 .glow-amber {
-  box-shadow: 0 0 20px rgba(245,158,11,0.15);
+  box-shadow: 0 4px 20px rgba(245,158,11,0.2);
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: #0A0A0F;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2A2A3A;
+  background: rgba(0,0,0,0.15);
   border-radius: 2px;
 }
 
-/* Progress circle gradient */
 .progress-gradient {
   stroke: url(#progressGradient);
 }

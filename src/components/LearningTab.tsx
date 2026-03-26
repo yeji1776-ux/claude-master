@@ -40,10 +40,10 @@ export default function LearningTab() {
     <div className="space-y-6 animate-fadeIn">
       {/* Header */}
       <div className="text-center pt-2">
-        <h1 className="text-xl font-bold bg-gradient-to-r from-amber-400 to-red-500 bg-clip-text text-transparent">
+        <h1 className="text-xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
           클로드 마스터
         </h1>
-        <p className="text-xs text-white/40 mt-1">8주 완성 AI 활용 100가지 팁</p>
+        <p className="text-xs text-gray-400 mt-1">8주 완성 AI 활용 100가지 팁</p>
       </div>
 
       {/* Progress Circle */}
@@ -51,7 +51,7 @@ export default function LearningTab() {
 
       {/* Week Cards */}
       <div>
-        <h2 className="text-white/80 text-sm font-semibold mb-3">📚 주차별 커리큘럼</h2>
+        <h2 className="text-gray-700 text-sm font-semibold mb-3">📚 주차별 커리큘럼</h2>
         <div className="grid grid-cols-2 gap-3">
           {Array.from({ length: 8 }, (_, i) => i + 1).map(week => (
             <WeekCard
@@ -69,7 +69,7 @@ export default function LearningTab() {
       {/* Tip List for active week */}
       {activeWeek && weekTips[activeWeek] && (
         <div>
-          <h2 className="text-white/80 text-sm font-semibold mb-3">
+          <h2 className="text-gray-700 text-sm font-semibold mb-3">
             Week {activeWeek} 팁 목록
           </h2>
           <TipList
@@ -81,7 +81,7 @@ export default function LearningTab() {
       )}
 
       {/* Category Progress */}
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4">
+      <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4">
         <CategoryProgress categoryStats={categoryStats} />
       </div>
     </div>

@@ -19,18 +19,18 @@ export default function TipList({ tips, completedTips, onTipClick }: TipListProp
             onClick={() => onTipClick(tip.id)}
             className={`w-full flex items-center gap-3 rounded-xl border p-3 text-left transition-all ${
               isCompleted
-                ? 'bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/15'
-                : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                ? 'bg-emerald-50/80 border-emerald-200 hover:bg-emerald-50'
+                : 'bg-white/60 backdrop-blur-xl border-white/80 shadow-sm hover:bg-white/70 hover:shadow-xl hover:shadow-black/10'
             }`}
           >
             <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-              isCompleted ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/10 text-white/40'
+              isCompleted ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-100 text-gray-500'
             }`}>
               {isCompleted ? '\u2713' : tip.id}
             </span>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">{tip.title}</p>
-              <p className="text-xs text-white/40 truncate">{tip.desc}</p>
+              <p className="text-sm font-medium text-gray-900 truncate">{tip.title}</p>
+              <p className="text-xs text-gray-400 truncate">{tip.desc}</p>
             </div>
             <span
               className="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium"

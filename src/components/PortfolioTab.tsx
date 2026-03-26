@@ -31,18 +31,18 @@ export default function PortfolioTab() {
   return (
     <div className="space-y-4 animate-fadeIn">
       <div className="text-center pt-2">
-        <h1 className="text-xl font-bold text-white">🎯 나의 포트폴리오</h1>
-        <p className="text-xs text-white/40 mt-1">학습 성과를 확인하세요</p>
+        <h1 className="text-xl font-bold text-gray-900">🎯 나의 포트폴리오</h1>
+        <p className="text-xs text-gray-400 mt-1">학습 성과를 확인하세요</p>
       </div>
 
       {/* Level Card */}
-      <div className="bg-gradient-to-br from-amber-500/10 to-red-500/10 border border-amber-500/20 rounded-2xl p-6 text-center">
+      <div className="bg-gradient-to-br from-amber-100/80 to-orange-100/80 border border-amber-200/60 rounded-2xl p-6 text-center">
         <p className="text-4xl mb-2">{level.emoji}</p>
-        <p className="text-lg font-bold text-white">{level.name}</p>
-        <p className="text-sm text-white/40 mt-1">전체 {totalPercentage}% 완료</p>
-        <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden mt-3">
+        <p className="text-lg font-bold text-gray-900">{level.name}</p>
+        <p className="text-sm text-gray-400 mt-1">전체 {totalPercentage}% 완료</p>
+        <div className="h-2 w-full rounded-full bg-gray-200/50 overflow-hidden mt-3">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-amber-500 to-red-500 transition-all duration-700"
+            className="h-full rounded-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-700"
             style={{ width: `${totalPercentage}%` }}
           />
         </div>
@@ -50,21 +50,21 @@ export default function PortfolioTab() {
 
       {/* Category Breakdown */}
       <div>
-        <h2 className="text-white/80 text-sm font-semibold mb-3">카테고리별 성과</h2>
+        <h2 className="text-gray-700 text-sm font-semibold mb-3">카테고리별 성과</h2>
         <div className="space-y-3">
           {stats.map(stat => (
-            <div key={stat.category} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4">
+            <div key={stat.category} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-white/70">{stat.category}</span>
+                <span className="text-sm text-gray-600">{stat.category}</span>
                 <span className="text-sm font-bold" style={{ color: stat.color }}>{stat.percentage}%</span>
               </div>
-              <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
+              <div className="h-2 w-full rounded-full bg-gray-200/50 overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{ width: `${stat.percentage}%`, backgroundColor: stat.color }}
                 />
               </div>
-              <p className="text-xs text-white/40 mt-1">{stat.completed}/{stat.total} 완료</p>
+              <p className="text-xs text-gray-400 mt-1">{stat.completed}/{stat.total} 완료</p>
             </div>
           ))}
         </div>

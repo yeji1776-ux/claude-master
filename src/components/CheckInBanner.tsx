@@ -88,25 +88,25 @@ export default function CheckInBanner() {
   };
 
   return (
-    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5">
+    <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-5">
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1 min-w-0">
-          <p className="text-white text-sm font-medium mb-1">{greeting}</p>
+          <p className="text-gray-900 text-sm font-medium mb-1">{greeting}</p>
           {streak > 0 && (
-            <p className="text-amber-400 text-xs font-medium">
+            <p className="text-amber-600 text-xs font-medium">
               🔥 {streak}일 연속 학습 중
             </p>
           )}
         </div>
         <div className="flex-shrink-0">
           {isCheckedIn ? (
-            <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white/40 text-sm cursor-default">
+            <div className="bg-emerald-50/80 border border-emerald-200 rounded-xl px-4 py-2 text-emerald-700 text-sm cursor-default">
               오늘도 출석 완료! 🔥
             </div>
           ) : (
             <button
               onClick={handleCheckIn}
-              className="bg-gradient-to-r from-amber-500 to-red-500 text-black font-semibold text-sm px-4 py-2 rounded-xl hover:shadow-[0_0_20px_rgba(245,158,11,0.5)] transition-all animate-pulse"
+              className="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold text-sm px-4 py-2 rounded-xl shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/30 transition-all animate-pulse"
             >
               출석 체크
             </button>

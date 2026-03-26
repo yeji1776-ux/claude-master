@@ -45,8 +45,8 @@ function SubTabSelector({ tabs, activeTab, onTabChange }: {
           onClick={() => onTabChange(tab.id)}
           className={`shrink-0 rounded-full px-4 py-2 text-xs font-medium transition-all ${
             activeTab === tab.id
-              ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-              : 'bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:border-white/20'
+              ? 'bg-amber-500 text-white'
+              : 'bg-white/50 border border-white/60 text-gray-600 hover:bg-white/70'
           }`}
         >
           {tab.label}
@@ -93,8 +93,8 @@ export default function Home() {
           {toolsSubTab === 'timer' && (
             <div className="space-y-4">
               <div className="text-center pt-2">
-                <h1 className="text-xl font-bold text-white">⏱️ 집중 타이머</h1>
-                <p className="text-xs text-white/40 mt-1">포모도로 기법으로 집중하세요</p>
+                <h1 className="text-xl font-bold text-gray-900">⏱️ 집중 타이머</h1>
+                <p className="text-xs text-gray-400 mt-1">포모도로 기법으로 집중하세요</p>
               </div>
               <TimerWidget />
             </div>

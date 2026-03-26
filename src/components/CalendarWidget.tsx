@@ -32,16 +32,16 @@ export default function CalendarWidget() {
   return (
     <div className="space-y-4 animate-fadeIn">
       <div className="text-center pt-2">
-        <h1 className="text-xl font-bold text-white">📅 학습 캘린더</h1>
-        <p className="text-xs text-white/40 mt-1">학습 기록을 한눈에 확인하세요</p>
+        <h1 className="text-xl font-bold text-gray-900">📅 학습 캘린더</h1>
+        <p className="text-xs text-gray-400 mt-1">학습 기록을 한눈에 확인하세요</p>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4">
-        <h3 className="text-center text-sm font-semibold text-white mb-4">{monthName}</h3>
+      <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4">
+        <h3 className="text-center text-sm font-semibold text-gray-900 mb-4">{monthName}</h3>
 
         <div className="grid grid-cols-7 gap-1 mb-2">
           {dayLabels.map(day => (
-            <div key={day} className="text-center text-xs text-white/40 py-1">{day}</div>
+            <div key={day} className="text-center text-xs text-gray-400 py-1">{day}</div>
           ))}
         </div>
 
@@ -58,10 +58,10 @@ export default function CalendarWidget() {
                 key={day}
                 className={`h-9 flex items-center justify-center rounded-lg text-xs transition-all ${
                   isToday
-                    ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30 font-bold'
+                    ? 'bg-amber-100/80 text-amber-700 border border-amber-300 font-bold'
                     : isActive
-                      ? 'bg-emerald-500/10 text-emerald-400'
-                      : 'text-white/40'
+                      ? 'bg-emerald-50/80 text-emerald-600'
+                      : 'text-gray-400'
                 }`}
               >
                 {day}
@@ -72,24 +72,24 @@ export default function CalendarWidget() {
 
         <div className="flex items-center justify-center gap-4 mt-4 text-xs">
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded bg-amber-500/20 border border-amber-500/30" />
-            <span className="text-white/40">오늘</span>
+            <span className="w-3 h-3 rounded bg-amber-100/80 border border-amber-300" />
+            <span className="text-gray-400">오늘</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded bg-emerald-500/10" />
-            <span className="text-white/40">학습 완료</span>
+            <span className="w-3 h-3 rounded bg-emerald-50/80" />
+            <span className="text-gray-400">학습 완료</span>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 text-center">
-          <p className="text-2xl font-bold text-amber-400">{completedTips.length}</p>
-          <p className="text-xs text-white/40 mt-1">총 완료 팁</p>
+        <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 text-center">
+          <p className="text-2xl font-bold text-amber-600">{completedTips.length}</p>
+          <p className="text-xs text-gray-400 mt-1">총 완료 팁</p>
         </div>
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 text-center">
-          <p className="text-2xl font-bold text-emerald-400">{activeDays.size}</p>
-          <p className="text-xs text-white/40 mt-1">이번 달 학습일</p>
+        <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 text-center">
+          <p className="text-2xl font-bold text-emerald-600">{activeDays.size}</p>
+          <p className="text-xs text-gray-400 mt-1">이번 달 학습일</p>
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ export default function ProgressCircle({ completed, total }: ProgressCircleProps
           <defs>
             <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#F59E0B" />
-              <stop offset="100%" stopColor="#EF4444" />
+              <stop offset="100%" stopColor="#F97316" />
             </linearGradient>
             <filter id="progressGlow">
               <feGaussianBlur stdDeviation="3" result="coloredBlur" />
@@ -34,7 +34,7 @@ export default function ProgressCircle({ completed, total }: ProgressCircleProps
             cy="90"
             r={radius}
             fill="none"
-            stroke="rgba(255,255,255,0.05)"
+            stroke="rgba(0,0,0,0.06)"
             strokeWidth="8"
           />
           {/* Progress circle */}
@@ -54,12 +54,12 @@ export default function ProgressCircle({ completed, total }: ProgressCircleProps
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-3xl font-bold text-white">{completed}</span>
-          <span className="text-sm text-white/70">/ {total} 완료</span>
+          <span className="text-3xl font-bold text-gray-900">{completed}</span>
+          <span className="text-sm text-gray-500">/ {total} 완료</span>
         </div>
       </div>
-      <p className="text-sm text-white/70">
-        전체 진행률 <span className="font-semibold text-amber-400">{Math.round(percentage)}%</span>
+      <p className="text-sm text-gray-500">
+        전체 진행률 <span className="font-semibold text-amber-600">{Math.round(percentage)}%</span>
       </p>
     </div>
   );

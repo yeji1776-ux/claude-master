@@ -21,8 +21,8 @@ export default function WeekCard({ week, completed, total, onClick, isActive }: 
       onClick={onClick}
       className={`w-full rounded-2xl border p-4 text-left transition-all ${
         isActive
-          ? 'bg-white/10 border-amber-400/30 glow-amber'
-          : 'bg-white/5 backdrop-blur-xl border-white/10 hover:bg-white/10 hover:border-white/20'
+          ? 'bg-white/70 border-white/80 shadow-xl shadow-black/10 glow-amber'
+          : 'bg-white/60 backdrop-blur-xl border-white/80 shadow-lg shadow-black/5 hover:bg-white/70 hover:shadow-xl hover:shadow-black/10'
       }`}
       style={{ borderTopWidth: '3px', borderTopColor: color }}
     >
@@ -31,16 +31,16 @@ export default function WeekCard({ week, completed, total, onClick, isActive }: 
           <span className="text-xs font-semibold uppercase tracking-wider" style={{ color }}>
             Week {week}
           </span>
-          <h3 className="text-sm font-medium text-white mt-0.5">
+          <h3 className="text-sm font-medium text-gray-900 mt-0.5">
             {WEEK_TITLES[week]}
           </h3>
         </div>
-        <span className="text-xs text-white/40">
+        <span className="text-xs text-gray-400">
           {completed}/{total}
         </span>
       </div>
       {/* Progress bar */}
-      <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+      <div className="h-1.5 w-full rounded-full bg-gray-200/50 overflow-hidden">
         <div
           className="h-full rounded-full transition-all duration-500"
           style={{ width: `${percentage}%`, backgroundColor: color }}
