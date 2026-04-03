@@ -36,60 +36,65 @@ export default function CalendarWidget() {
         <p className="text-xs text-gray-400 mt-1">학습 기록을 한눈에 확인하세요</p>
       </div>
 
-      <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4">
-        <h3 className="text-center text-sm font-semibold text-gray-900 mb-4">{monthName}</h3>
+      {/* Calendar + Stats side by side on desktop */}
+      <div className="md:flex md:gap-6">
+        {/* Calendar */}
+        <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 md:flex-1">
+          <h3 className="text-center text-sm font-semibold text-gray-900 mb-4">{monthName}</h3>
 
-        <div className="grid grid-cols-7 gap-1 mb-2">
-          {dayLabels.map(day => (
-            <div key={day} className="text-center text-xs text-gray-400 py-1">{day}</div>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-7 gap-1">
-          {Array.from({ length: firstDayOfWeek }, (_, i) => (
-            <div key={`empty-${i}`} className="h-9" />
-          ))}
-          {Array.from({ length: daysInMonth }, (_, i) => {
-            const day = i + 1;
-            const isToday = day === today;
-            const isActive = activeDays.has(day);
-            return (
-              <div
-                key={day}
-                className={`h-9 flex items-center justify-center rounded-lg text-xs transition-all ${
-                  isToday
-                    ? 'bg-amber-100/80 text-amber-700 border border-amber-300 font-bold'
-                    : isActive
-                      ? 'bg-emerald-50/80 text-emerald-600'
-                      : 'text-gray-400'
-                }`}
-              >
-                {day}
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="flex items-center justify-center gap-4 mt-4 text-xs">
-          <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded bg-amber-100/80 border border-amber-300" />
-            <span className="text-gray-400">오늘</span>
+          <div className="grid grid-cols-7 gap-1 mb-2">
+            {dayLabels.map(day => (
+              <div key={day} className="text-center text-xs text-gray-400 py-1">{day}</div>
+            ))}
           </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded bg-emerald-50/80" />
-            <span className="text-gray-400">학습 완료</span>
+
+          <div className="grid grid-cols-7 gap-1">
+            {Array.from({ length: firstDayOfWeek }, (_, i) => (
+              <div key={`empty-${i}`} className="h-9" />
+            ))}
+            {Array.from({ length: daysInMonth }, (_, i) => {
+              const day = i + 1;
+              const isToday = day === today;
+              const isActive = activeDays.has(day);
+              return (
+                <div
+                  key={day}
+                  className={`h-9 flex items-center justify-center rounded-lg text-xs transition-all ${
+                    isToday
+                      ? 'bg-amber-100/80 text-amber-700 border border-amber-300 font-bold'
+                      : isActive
+                        ? 'bg-emerald-50/80 text-emerald-600'
+                        : 'text-gray-400'
+                  }`}
+                >
+                  {day}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex items-center justify-center gap-4 mt-4 text-xs">
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded bg-amber-100/80 border border-amber-300" />
+              <span className="text-gray-400">오늘</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded bg-emerald-50/80" />
+              <span className="text-gray-400">학습 완료</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 text-center">
-          <p className="text-2xl font-bold text-amber-600">{completedTips.length}</p>
-          <p className="text-xs text-gray-400 mt-1">총 완료 팁</p>
-        </div>
-        <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 text-center">
-          <p className="text-2xl font-bold text-emerald-600">{activeDays.size}</p>
-          <p className="text-xs text-gray-400 mt-1">이번 달 학습일</p>
+        {/* Activity Stats */}
+        <div className="grid grid-cols-2 gap-3 mt-4 md:mt-0 md:flex md:flex-col md:gap-3 md:w-48">
+          <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 text-center">
+            <p className="text-2xl font-bold text-amber-600">{completedTips.length}</p>
+            <p className="text-xs text-gray-400 mt-1">총 완료 팁</p>
+          </div>
+          <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 text-center">
+            <p className="text-2xl font-bold text-emerald-600">{activeDays.size}</p>
+            <p className="text-xs text-gray-400 mt-1">이번 달 학습일</p>
+          </div>
         </div>
       </div>
     </div>

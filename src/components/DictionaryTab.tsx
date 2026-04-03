@@ -177,7 +177,7 @@ export default function DictionaryTab() {
           </p>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-2 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
           {filteredTerms.map(term => (
             <div key={term.id} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 animate-fadeIn hover:bg-white/70 hover:shadow-xl hover:shadow-black/10 transition-all">
               <div className="flex items-start justify-between gap-2">

@@ -81,7 +81,7 @@ export default function MemoTab() {
           <p className="text-sm text-gray-400">아직 메모가 없어요</p>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-2 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-3 md:space-y-0">
           {memos.map(memo => (
             <div key={memo.id} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 hover:bg-white/70 hover:shadow-xl hover:shadow-black/10 transition-all">
               {editingId === memo.id ? (

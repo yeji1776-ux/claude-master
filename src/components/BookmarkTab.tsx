@@ -29,7 +29,7 @@ export default function BookmarkTab() {
           <p className="text-xs text-gray-400 mt-1">팁 상세 페이지에서 별 아이콘을 눌러보세요</p>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-2 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
           {bookmarkedTips.map(tip => {
             const isCompleted = completedTips.includes(tip.id);
             const color = CATEGORY_COLORS[tip.category];

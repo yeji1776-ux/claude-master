@@ -55,45 +55,47 @@ export default function AGReferenceTab() {
       </div>
 
       {/* Sections */}
-      {filteredSections.map(section => (
-        <div key={section.id} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 overflow-hidden">
-          <button
-            onClick={() => setExpandedSection(expandedSection === section.id ? null : section.id)}
-            className="w-full flex items-center justify-between p-4 text-left hover:bg-white/70 transition-all"
-          >
-            <div className="flex items-center gap-2">
-              <span className="text-xl">{section.emoji}</span>
-              <div>
-                <h3 className="text-sm font-semibold text-gray-900">{section.title}</h3>
-                <p className="text-xs text-gray-400">{section.description}</p>
-              </div>
-            </div>
-            <span className={`text-gray-400 transition-transform ${expandedSection === section.id ? 'rotate-180' : ''}`}>
-              ▾
-            </span>
-          </button>
-
-          {expandedSection === section.id && (
-            <div className="border-t border-gray-100 px-4 pb-4 space-y-3 animate-fadeIn">
-              {section.items.map(item => (
-                <div key={item.id} className="pt-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <h4 className="text-sm font-medium text-gray-900">{item.title}</h4>
-                    <div className="flex gap-1 shrink-0">
-                      {item.tags.map(tag => (
-                        <span key={tag} className="rounded-full bg-amber-50/80 px-2 py-0.5 text-[10px] text-amber-600">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-600 mt-1 leading-relaxed">{item.description}</p>
+      <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
+        {filteredSections.map(section => (
+          <div key={section.id} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 overflow-hidden">
+            <button
+              onClick={() => setExpandedSection(expandedSection === section.id ? null : section.id)}
+              className="w-full flex items-center justify-between p-4 text-left hover:bg-white/70 transition-all"
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-xl">{section.emoji}</span>
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-900">{section.title}</h3>
+                  <p className="text-xs text-gray-400">{section.description}</p>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
-      ))}
+              </div>
+              <span className={`text-gray-400 transition-transform ${expandedSection === section.id ? 'rotate-180' : ''}`}>
+                ▾
+              </span>
+            </button>
+
+            {expandedSection === section.id && (
+              <div className="border-t border-gray-100 px-4 pb-4 space-y-3 animate-fadeIn">
+                {section.items.map(item => (
+                  <div key={item.id} className="pt-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <h4 className="text-sm font-medium text-gray-900">{item.title}</h4>
+                      <div className="flex gap-1 shrink-0">
+                        {item.tags.map(tag => (
+                          <span key={tag} className="rounded-full bg-amber-50/80 px-2 py-0.5 text-[10px] text-amber-600">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1 leading-relaxed">{item.description}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -50,7 +50,7 @@ export default function YouTubeTab() {
       </div>
 
       {/* Video List */}
-      <div className="space-y-3">
+      <div className="space-y-3 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-4 md:space-y-0">
         {filteredVideos.map(video => (
           <div key={video.id} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 hover:bg-white/70 hover:shadow-xl hover:shadow-black/10 transition-all">
             <div className="flex items-start gap-3">

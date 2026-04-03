@@ -51,7 +51,7 @@ export default function PortfolioTab() {
       {/* Category Breakdown */}
       <div>
         <h2 className="text-gray-700 text-sm font-semibold mb-3">카테고리별 성과</h2>
-        <div className="space-y-3">
+        <div className="space-y-3 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
           {stats.map(stat => (
             <div key={stat.category} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4">
               <div className="flex items-center justify-between mb-2">

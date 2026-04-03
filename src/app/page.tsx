@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import BottomNav from '@/components/BottomNav';
+import Sidebar from '@/components/Sidebar';
 import HomePage from '@/components/HomePage';
 import LearningTab from '@/components/LearningTab';
 import AGReferenceTab from '@/components/AGReferenceTab';
@@ -63,58 +64,65 @@ export default function Home() {
   const [mySubTab, setMySubTab] = useState('calendar');
 
   return (
-    <div className="mx-auto max-w-[520px] min-h-dvh px-4 pb-24">
-      {/* Home Tab */}
-      {activeTab === 'home' && (
-        <HomePage onTabChange={(tab, subTab) => {
-          setActiveTab(tab as MainTab);
-          if (tab === 'tools' && subTab) setToolsSubTab(subTab);
-          if (tab === 'my' && subTab) setMySubTab(subTab);
-          if (tab === 'reference' && subTab) setReferenceSubTab(subTab);
-        }} />
-      )}
+    <div className="min-h-dvh">
+      {/* Desktop Sidebar */}
+      <Sidebar activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as MainTab)} />
 
-      {/* Learn Tab */}
-      {activeTab === 'learn' && <LearningTab />}
+      {/* Content Area */}
+      <div className="md:ml-20 lg:ml-64 max-w-[520px] md:max-w-3xl lg:max-w-4xl mx-auto px-4 pb-24 md:pb-8">
+        {/* Home Tab */}
+        {activeTab === 'home' && (
+          <HomePage onTabChange={(tab, subTab) => {
+            setActiveTab(tab as MainTab);
+            if (tab === 'tools' && subTab) setToolsSubTab(subTab);
+            if (tab === 'my' && subTab) setMySubTab(subTab);
+            if (tab === 'reference' && subTab) setReferenceSubTab(subTab);
+          }} />
+        )}
 
-      {/* Reference Tab with sub-tabs */}
-      {activeTab === 'reference' && (
-        <div className="animate-fadeIn">
-          <SubTabSelector tabs={REFERENCE_SUB_TABS} activeTab={referenceSubTab} onTabChange={setReferenceSubTab} />
-          {referenceSubTab === 'ag' && <AGReferenceTab />}
-          {referenceSubTab === 'youtube' && <YouTubeTab />}
-        </div>
-      )}
+        {/* Learn Tab */}
+        {activeTab === 'learn' && <LearningTab />}
 
-      {/* Tools Tab with sub-tabs */}
-      {activeTab === 'tools' && (
-        <div className="animate-fadeIn">
-          <SubTabSelector tabs={TOOLS_SUB_TABS} activeTab={toolsSubTab} onTabChange={setToolsSubTab} />
-          {toolsSubTab === 'timer' && (
-            <div className="space-y-4">
-              <div className="text-center pt-2">
-                <h1 className="text-xl font-bold text-gray-900">⏱️ 집중 타이머</h1>
-                <p className="text-xs text-gray-400 mt-1">포모도로 기법으로 집중하세요</p>
+        {/* Reference Tab with sub-tabs */}
+        {activeTab === 'reference' && (
+          <div className="animate-fadeIn">
+            <SubTabSelector tabs={REFERENCE_SUB_TABS} activeTab={referenceSubTab} onTabChange={setReferenceSubTab} />
+            {referenceSubTab === 'ag' && <AGReferenceTab />}
+            {referenceSubTab === 'youtube' && <YouTubeTab />}
+          </div>
+        )}
+
+        {/* Tools Tab with sub-tabs */}
+        {activeTab === 'tools' && (
+          <div className="animate-fadeIn">
+            <SubTabSelector tabs={TOOLS_SUB_TABS} activeTab={toolsSubTab} onTabChange={setToolsSubTab} />
+            {toolsSubTab === 'timer' && (
+              <div className="space-y-4">
+                <div className="text-center pt-2">
+                  <h1 className="text-xl font-bold text-gray-900">⏱️ 집중 타이머</h1>
+                  <p className="text-xs text-gray-400 mt-1">포모도로 기법으로 집중하세요</p>
+                </div>
+                <TimerWidget />
               </div>
-              <TimerWidget />
-            </div>
-          )}
-          {toolsSubTab === 'memo' && <MemoTab />}
-          {toolsSubTab === 'dictionary' && <DictionaryTab />}
-          {toolsSubTab === 'bookmark' && <BookmarkTab />}
-        </div>
-      )}
+            )}
+            {toolsSubTab === 'memo' && <MemoTab />}
+            {toolsSubTab === 'dictionary' && <DictionaryTab />}
+            {toolsSubTab === 'bookmark' && <BookmarkTab />}
+          </div>
+        )}
 
-      {/* My Tab with sub-tabs */}
-      {activeTab === 'my' && (
-        <div className="animate-fadeIn">
-          <SubTabSelector tabs={MY_SUB_TABS} activeTab={mySubTab} onTabChange={setMySubTab} />
-          {mySubTab === 'calendar' && <CalendarWidget />}
-          {mySubTab === 'portfolio' && <PortfolioTab />}
-        </div>
-      )}
+        {/* My Tab with sub-tabs */}
+        {activeTab === 'my' && (
+          <div className="animate-fadeIn">
+            <SubTabSelector tabs={MY_SUB_TABS} activeTab={mySubTab} onTabChange={setMySubTab} />
+            {mySubTab === 'calendar' && <CalendarWidget />}
+            {mySubTab === 'portfolio' && <PortfolioTab />}
+          </div>
+        )}
 
-      <BottomNav activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as MainTab)} />
+        {/* Mobile Bottom Nav */}
+        <BottomNav activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as MainTab)} />
+      </div>
     </div>
   );
 }

@@ -33,7 +33,7 @@ export default function TimerWidget() {
 
         {/* Circular progress */}
         <div className="relative">
-          <svg width="140" height="140" viewBox="0 0 140 140">
+          <svg width="140" height="140" viewBox="0 0 140 140" className="md:w-[200px] md:h-[200px]">
             <defs>
               <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor={mode === 'focus' ? '#F59E0B' : '#10B981'} />
@@ -65,7 +65,7 @@ export default function TimerWidget() {
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-3xl font-bold text-gray-900 font-mono">{timeDisplay}</span>
+            <span className="text-3xl md:text-4xl font-bold text-gray-900 font-mono">{timeDisplay}</span>
             <span className="text-xs text-gray-400 mt-1">
               {mode === 'focus' ? '집중' : '휴식'}
             </span>

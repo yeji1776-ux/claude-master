@@ -27,7 +27,7 @@ export default function TipPage({ params }: { params: Promise<{ id: string }> })
 
   if (!tip) {
     return (
-      <div className="mx-auto max-w-[520px] min-h-dvh px-4 flex items-center justify-center">
+      <div className="md:ml-20 lg:ml-64 mx-auto max-w-[520px] md:max-w-2xl min-h-dvh px-4 md:px-0 flex items-center justify-center">
         <p className="text-gray-400">팁을 찾을 수 없습니다.</p>
       </div>
     );
@@ -61,7 +61,7 @@ export default function TipPage({ params }: { params: Promise<{ id: string }> })
   };
 
   return (
-    <div className="mx-auto max-w-[520px] min-h-dvh px-4 py-6 animate-fadeIn">
+    <div className="md:ml-20 lg:ml-64 mx-auto max-w-[520px] md:max-w-2xl min-h-dvh px-4 md:px-0 py-6 animate-fadeIn">
       {/* Header */}
       <button
         onClick={() => router.back()}
@@ -111,21 +111,24 @@ export default function TipPage({ params }: { params: Promise<{ id: string }> })
         <p className="text-sm text-gray-600 leading-relaxed">{tip.lesson}</p>
       </section>
 
-      {/* Bad Example */}
-      <section className="mb-4 bg-red-50/80 border border-red-200/60 rounded-2xl p-4">
-        <h2 className="text-sm font-semibold text-red-700 mb-2">❌ 나쁜 예시</h2>
-        <p className="text-sm text-gray-700 leading-relaxed font-mono bg-gray-50/80 rounded-lg p-3">
-          {tip.bad}
-        </p>
-      </section>
+      {/* Bad + Good Examples - side by side on desktop */}
+      <div className="md:grid md:grid-cols-2 md:gap-4 mb-6">
+        {/* Bad Example */}
+        <section className="mb-4 md:mb-0 bg-red-50/80 border border-red-200/60 rounded-2xl p-4">
+          <h2 className="text-sm font-semibold text-red-700 mb-2">❌ 나쁜 예시</h2>
+          <p className="text-sm text-gray-700 leading-relaxed font-mono bg-gray-50/80 rounded-lg p-3">
+            {tip.bad}
+          </p>
+        </section>
 
-      {/* Good Example */}
-      <section className="mb-6 bg-emerald-50/80 border border-emerald-200/60 rounded-2xl p-4">
-        <h2 className="text-sm font-semibold text-emerald-700 mb-2">✅ 좋은 예시</h2>
-        <p className="text-sm text-gray-700 leading-relaxed font-mono bg-gray-50/80 rounded-lg p-3">
-          {tip.good}
-        </p>
-      </section>
+        {/* Good Example */}
+        <section className="mb-4 md:mb-0 bg-emerald-50/80 border border-emerald-200/60 rounded-2xl p-4">
+          <h2 className="text-sm font-semibold text-emerald-700 mb-2">✅ 좋은 예시</h2>
+          <p className="text-sm text-gray-700 leading-relaxed font-mono bg-gray-50/80 rounded-lg p-3">
+            {tip.good}
+          </p>
+        </section>
+      </div>
 
       {/* Practice */}
       <section className="mb-6 bg-amber-50/80 border border-amber-200/60 rounded-2xl p-4">
@@ -136,7 +139,7 @@ export default function TipPage({ params }: { params: Promise<{ id: string }> })
       {/* Quiz */}
       <section className="mb-6 bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4">
         <h2 className="text-sm font-semibold text-amber-700 mb-3">🧠 퀴즈: 어떤 프롬프트가 더 효과적일까?</h2>
-        <div className="space-y-3">
+        <div className="space-y-3 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
           {quizOrder.map((type, index) => {
             const isSelected = quizAnswer === type;
             const isCorrect = type === 'good';

@@ -46,13 +46,20 @@ export default function LearningTab() {
         <p className="text-xs text-gray-400 mt-1">8주 완성 AI 활용 100가지 팁</p>
       </div>
 
-      {/* Progress Circle */}
-      <ProgressCircle completed={completedTips.length} total={100} />
+      {/* Progress Circle + Category Progress side by side on desktop */}
+      <div className="md:flex md:gap-8 md:items-start">
+        <div className="md:flex-1">
+          <ProgressCircle completed={completedTips.length} total={100} />
+        </div>
+        <div className="mt-6 md:mt-0 md:flex-1 bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4">
+          <CategoryProgress categoryStats={categoryStats} />
+        </div>
+      </div>
 
       {/* Week Cards */}
       <div>
         <h2 className="text-gray-700 text-sm font-semibold mb-3">📚 주차별 커리큘럼</h2>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {Array.from({ length: 8 }, (_, i) => i + 1).map(week => (
             <WeekCard
               key={week}
@@ -79,11 +86,6 @@ export default function LearningTab() {
           />
         </div>
       )}
-
-      {/* Category Progress */}
-      <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4">
-        <CategoryProgress categoryStats={categoryStats} />
-      </div>
     </div>
   );
 }
