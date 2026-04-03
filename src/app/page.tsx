@@ -6,6 +6,7 @@ import Sidebar from '@/components/Sidebar';
 import HomePage from '@/components/HomePage';
 import LearningTab from '@/components/LearningTab';
 import AGReferenceTab from '@/components/AGReferenceTab';
+import GSDReferenceTab from '@/components/GSDReferenceTab';
 import YouTubeTab from '@/components/YouTubeTab';
 import TimerWidget from '@/components/TimerWidget';
 import MemoTab from '@/components/MemoTab';
@@ -18,6 +19,7 @@ type MainTab = 'home' | 'learn' | 'reference' | 'tools' | 'my';
 
 const REFERENCE_SUB_TABS = [
   { id: 'ag', label: '🛸 AG 레퍼런스' },
+  { id: 'gsd', label: '⚙️ GSD 가이드' },
   { id: 'youtube', label: '📺 추천 영상' },
 ];
 
@@ -88,6 +90,7 @@ export default function Home() {
           <div className="animate-fadeIn">
             <SubTabSelector tabs={REFERENCE_SUB_TABS} activeTab={referenceSubTab} onTabChange={setReferenceSubTab} />
             {referenceSubTab === 'ag' && <AGReferenceTab />}
+            {referenceSubTab === 'gsd' && <GSDReferenceTab />}
             {referenceSubTab === 'youtube' && <YouTubeTab />}
           </div>
         )}
