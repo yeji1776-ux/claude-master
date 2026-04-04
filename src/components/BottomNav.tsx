@@ -9,12 +9,13 @@ interface BottomNavProps {
 
 export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-2xl border-t border-white/80 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] md:hidden">
+    <nav aria-label="메인 내비게이션" className="fixed bottom-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-2xl border-t border-white/80 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] md:hidden">
       <div className="mx-auto flex max-w-[520px] items-center justify-around py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
         {NAV_TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
+            aria-current={activeTab === tab.id ? 'page' : undefined}
             className={`flex flex-col items-center gap-1 px-3 py-2 text-xs transition-all ${
               activeTab === tab.id
                 ? 'text-amber-600 scale-105'

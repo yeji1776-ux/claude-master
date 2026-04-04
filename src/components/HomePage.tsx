@@ -25,8 +25,8 @@ const quickAccess = [
 
 export default function HomePage({ onTabChange }: HomePageProps) {
   const router = useRouter();
-  const [completedTips] = useLocalStorage<number[]>(STORAGE_KEYS.COMPLETED, []);
-  const [bookmarks] = useLocalStorage<number[]>(STORAGE_KEYS.BOOKMARKS, []);
+  const [completedTips, , completedLoaded] = useLocalStorage<number[]>(STORAGE_KEYS.COMPLETED, []);
+  const [bookmarks, , bookmarksLoaded] = useLocalStorage<number[]>(STORAGE_KEYS.BOOKMARKS, []);
   const { isRunning, timeLeft, mode, todayMinutes } = useTimer();
 
   const percentage = useMemo(() => Math.round((completedTips.length / tips.length) * 100), [completedTips]);
@@ -35,11 +35,12 @@ export default function HomePage({ onTabChange }: HomePageProps) {
     return bookmarks.slice(-3).reverse().map(id => tips.find(t => t.id === id)).filter(Boolean);
   }, [bookmarks]);
 
+  const dataLoaded = completedLoaded && bookmarksLoaded;
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
 
   return (
-    <div className="space-y-5 animate-fadeIn">
+    <div className={`space-y-5 animate-fadeIn transition-opacity duration-300 ${dataLoaded ? 'opacity-100' : 'opacity-0'}`}>
       {/* Header */}
       <div className="text-center pt-4 md:hidden">
         <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">

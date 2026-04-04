@@ -74,6 +74,7 @@ export default function DictionaryTab() {
   };
 
   const handleDelete = (id: string) => {
+    if (!window.confirm('이 용어를 삭제하시겠습니까?')) return;
     setTerms(prev => prev.filter(t => t.id !== id));
   };
 
@@ -99,6 +100,7 @@ export default function DictionaryTab() {
           placeholder="용어 검색..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          aria-label="용어 검색"
           className="flex-1 rounded-xl bg-white/50 border border-white/60 backdrop-blur-sm px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 focus:outline-none transition-colors"
         />
         <button

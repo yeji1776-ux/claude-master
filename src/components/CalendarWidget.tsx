@@ -7,6 +7,7 @@ import GlassCard from './ui/GlassCard';
 
 export default function CalendarWidget() {
   const [completedTips] = useLocalStorage<number[]>(STORAGE_KEYS.COMPLETED, []);
+  const [studyRecords] = useLocalStorage<string[]>(STORAGE_KEYS.STUDY_RECORDS, []);
   const [currentDate] = useState(new Date());
 
   const year = currentDate.getFullYear();
@@ -22,14 +23,15 @@ export default function CalendarWidget() {
 
   const activeDays = useMemo(() => {
     const days = new Set<number>();
-    const count = completedTips.length;
-    if (count > 0) {
-      for (let i = 0; i < Math.min(count, today); i++) {
-        days.add(today - i);
+    // Use actual study records (ISO date strings like "2026-04-04")
+    for (const dateStr of studyRecords) {
+      const date = new Date(dateStr);
+      if (date.getFullYear() === year && date.getMonth() === month) {
+        days.add(date.getDate());
       }
     }
     return days;
-  }, [completedTips, today]);
+  }, [studyRecords, year, month]);
 
   return (
     <div className="space-y-4 animate-fadeIn">

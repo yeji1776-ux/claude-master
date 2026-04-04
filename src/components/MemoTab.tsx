@@ -29,6 +29,7 @@ export default function MemoTab() {
   };
 
   const handleDelete = (id: string) => {
+    if (!window.confirm('이 메모를 삭제하시겠습니까?')) return;
     setMemos(prev => prev.filter(m => m.id !== id));
   };
 
@@ -65,6 +66,7 @@ export default function MemoTab() {
           value={newMemo}
           onChange={(e) => setNewMemo(e.target.value)}
           rows={3}
+          aria-label="새 메모 입력"
           className="w-full rounded-xl bg-white/50 border border-white/60 backdrop-blur-sm px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 focus:outline-none resize-none transition-colors"
         />
         <button

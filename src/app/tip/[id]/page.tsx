@@ -15,6 +15,7 @@ export default function TipPage({ params }: { params: Promise<{ id: string }> })
   const tip = tips.find(t => t.id === tipId);
   const [completedTips, setCompletedTips] = useLocalStorage<number[]>(STORAGE_KEYS.COMPLETED, []);
   const [bookmarks, setBookmarks] = useLocalStorage<number[]>(STORAGE_KEYS.BOOKMARKS, []);
+  const [studyRecords, setStudyRecords] = useLocalStorage<string[]>(STORAGE_KEYS.STUDY_RECORDS, []);
   const [quizAnswer, setQuizAnswer] = useState<'bad' | 'good' | null>(null);
   const [showQuizResult, setShowQuizResult] = useState(false);
 
@@ -46,6 +47,9 @@ export default function TipPage({ params }: { params: Promise<{ id: string }> })
       setCompletedTips(prev => prev.filter(id => id !== tipId));
     } else {
       setCompletedTips(prev => [...prev, tipId]);
+      // Record today's date as a study day
+      const today = new Date().toISOString().split('T')[0];
+      setStudyRecords(prev => prev.includes(today) ? prev : [...prev, today]);
     }
   };
 
@@ -67,6 +71,7 @@ export default function TipPage({ params }: { params: Promise<{ id: string }> })
       {/* Header */}
       <button
         onClick={() => router.back()}
+        aria-label="목록으로 돌아가기"
         className="mb-4 flex items-center gap-1 text-sm text-gray-400 hover:text-amber-600 transition-colors"
       >
         ← 목록으로
@@ -91,6 +96,7 @@ export default function TipPage({ params }: { params: Promise<{ id: string }> })
             onClick={toggleBookmark}
             className="p-1.5 transition-all hover:scale-110"
             title={isBookmarked ? '북마크 해제' : '북마크 추가'}
+            aria-label={isBookmarked ? '북마크 해제' : '북마크 추가'}
           >
             {isBookmarked ? (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" strokeWidth="2">

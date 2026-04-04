@@ -9,7 +9,7 @@ interface SidebarProps {
 
 export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
   return (
-    <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-20 lg:w-64 flex-col items-center lg:items-stretch bg-white/60 backdrop-blur-2xl border-r border-white/80 shadow-[4px_0_20px_rgba(0,0,0,0.05)] z-50 py-8 px-2 lg:px-4">
+    <aside aria-label="사이드바 내비게이션" className="hidden md:flex fixed left-0 top-0 bottom-0 w-20 lg:w-64 flex-col items-center lg:items-stretch bg-white/60 backdrop-blur-2xl border-r border-white/80 shadow-[4px_0_20px_rgba(0,0,0,0.05)] z-50 py-8 px-2 lg:px-4">
       {/* Logo */}
       <div className="mb-8 text-center lg:text-left lg:px-3">
         <h1 className="hidden lg:block text-lg font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
@@ -25,6 +25,7 @@ export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
+            aria-current={activeTab === tab.id ? 'page' : undefined}
             className={`w-full flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-all ${
               activeTab === tab.id
                 ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25'

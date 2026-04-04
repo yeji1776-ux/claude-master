@@ -35,6 +35,7 @@ export default function AGReferenceTab() {
         placeholder="검색어를 입력하세요..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        aria-label="AG 레퍼런스 검색"
         className="w-full rounded-xl bg-white/50 border border-white/60 backdrop-blur-sm px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 focus:outline-none transition-colors"
       />
 

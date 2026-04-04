@@ -14,7 +14,7 @@ import GlassCard from './ui/GlassCard';
 
 export default function LearningTab() {
   const router = useRouter();
-  const [completedTips] = useLocalStorage<number[]>(STORAGE_KEYS.COMPLETED, []);
+  const [completedTips, , completedLoaded] = useLocalStorage<number[]>(STORAGE_KEYS.COMPLETED, []);
   const [activeWeek, setActiveWeek] = useState<number | null>(null);
 
   const weekTips = useMemo(() => {
@@ -39,7 +39,7 @@ export default function LearningTab() {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn">
+    <div className={`space-y-6 animate-fadeIn transition-opacity duration-300 ${completedLoaded ? 'opacity-100' : 'opacity-0'}`}>
       {/* Header */}
       <div className="text-center pt-2">
         <h1 className="text-xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">

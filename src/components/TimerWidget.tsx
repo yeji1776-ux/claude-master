@@ -80,6 +80,7 @@ export default function TimerWidget() {
             onClick={resetTimer}
             className="bg-white/50 backdrop-blur-sm border border-white/60 rounded-xl p-2.5 text-gray-500 hover:bg-white/70 hover:text-gray-700 transition-all"
             title="리셋"
+            aria-label="타이머 리셋"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
@@ -91,6 +92,7 @@ export default function TimerWidget() {
           <button
             onClick={toggleTimer}
             className="bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl p-3.5 shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/30 transition-all"
+            aria-label={isRunning ? '일시정지' : '시작'}
           >
             {isRunning ? (
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -109,6 +111,7 @@ export default function TimerWidget() {
             onClick={switchToBreak}
             className="bg-white/50 backdrop-blur-sm border border-white/60 rounded-xl p-2.5 text-gray-500 hover:bg-white/70 hover:text-gray-700 transition-all"
             title="휴식으로 전환"
+            aria-label="휴식으로 전환"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="5,4 15,12 5,20" />

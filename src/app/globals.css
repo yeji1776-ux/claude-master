@@ -69,3 +69,13 @@ body {
 .progress-gradient {
   stroke: url(#progressGradient);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fadeIn,
+  .animate-pulse {
+    animation: none !important;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
