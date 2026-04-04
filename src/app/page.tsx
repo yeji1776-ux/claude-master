@@ -1,19 +1,22 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import BottomNav from '@/components/BottomNav';
 import Sidebar from '@/components/Sidebar';
-import HomePage from '@/components/HomePage';
-import LearningTab from '@/components/LearningTab';
-import AGReferenceTab from '@/components/AGReferenceTab';
-import GSDReferenceTab from '@/components/GSDReferenceTab';
-import YouTubeTab from '@/components/YouTubeTab';
-import TimerWidget from '@/components/TimerWidget';
-import MemoTab from '@/components/MemoTab';
-import DictionaryTab from '@/components/DictionaryTab';
-import BookmarkTab from '@/components/BookmarkTab';
-import CalendarWidget from '@/components/CalendarWidget';
-import PortfolioTab from '@/components/PortfolioTab';
+
+const HomePage = dynamic(() => import('@/components/HomePage'));
+const LearningTab = dynamic(() => import('@/components/LearningTab'));
+const AGReferenceTab = dynamic(() => import('@/components/AGReferenceTab'));
+const GSDReferenceTab = dynamic(() => import('@/components/GSDReferenceTab'));
+const YouTubeTab = dynamic(() => import('@/components/YouTubeTab'));
+const TimerWidget = dynamic(() => import('@/components/TimerWidget'));
+const MemoTab = dynamic(() => import('@/components/MemoTab'));
+const DictionaryTab = dynamic(() => import('@/components/DictionaryTab'));
+const BookmarkTab = dynamic(() => import('@/components/BookmarkTab'));
+const CalendarWidget = dynamic(() => import('@/components/CalendarWidget'));
+const PortfolioTab = dynamic(() => import('@/components/PortfolioTab'));
+const DataManagement = dynamic(() => import('@/components/DataManagement'));
 
 type MainTab = 'home' | 'learn' | 'reference' | 'tools' | 'my';
 
@@ -33,6 +36,7 @@ const TOOLS_SUB_TABS = [
 const MY_SUB_TABS = [
   { id: 'calendar', label: '📅 캘린더' },
   { id: 'portfolio', label: '🎯 포트폴리오' },
+  { id: 'data', label: '💾 데이터 관리' },
 ];
 
 function SubTabSelector({ tabs, activeTab, onTabChange }: {
@@ -120,6 +124,7 @@ export default function Home() {
             <SubTabSelector tabs={MY_SUB_TABS} activeTab={mySubTab} onTabChange={setMySubTab} />
             {mySubTab === 'calendar' && <CalendarWidget />}
             {mySubTab === 'portfolio' && <PortfolioTab />}
+            {mySubTab === 'data' && <DataManagement />}
           </div>
         )}
 

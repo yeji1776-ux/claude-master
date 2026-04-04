@@ -10,7 +10,13 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T 
     try {
       const item = window.localStorage.getItem(key);
       if (item) {
-        setStoredValue(JSON.parse(item));
+        const parsed = JSON.parse(item);
+        // Validate type consistency: if initialValue is an array, parsed must also be an array (and vice versa)
+        if (Array.isArray(initialValue) !== Array.isArray(parsed)) {
+          console.warn(`useLocalStorage: type mismatch for key "${key}", using initial value`);
+        } else {
+          setStoredValue(parsed);
+        }
       }
     } catch (error) {
       console.error(error);
