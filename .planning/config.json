@@ -1,0 +1,16 @@
+{
+  "project": "claude-master",
+  "version": "1.0.0",
+  "language": "ko",
+  "framework": "nextjs",
+  "styling": "tailwind",
+  "testing": "none",
+  "deployment": "vercel",
+  "preferences": {
+    "commit_style": "korean",
+    "auto_commit": true,
+    "auto_push": true,
+    "parallel_agents": true,
+    "model_profile": "quality"
+  }
+}
