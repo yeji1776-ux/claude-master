@@ -5,11 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { tips } from '@/data/tips';
 import { CATEGORY_COLORS } from '@/types';
+import { STORAGE_KEYS } from '@/constants/storageKeys';
 
 export default function BookmarkTab() {
   const router = useRouter();
-  const [bookmarks] = useLocalStorage<number[]>('claude-master-bookmarks', []);
-  const [completedTips] = useLocalStorage<number[]>('claude-master-completed', []);
+  const [bookmarks] = useLocalStorage<number[]>(STORAGE_KEYS.BOOKMARKS, []);
+  const [completedTips] = useLocalStorage<number[]>(STORAGE_KEYS.COMPLETED, []);
 
   const bookmarkedTips = useMemo(() => {
     return tips.filter(t => bookmarks.includes(t.id));

@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { GlossaryTerm } from '@/types';
+import { STORAGE_KEYS } from '@/constants/storageKeys';
+import GlassCard from './ui/GlassCard';
 
 const CATEGORIES = ['전체', '일반', '프롬프트', '코딩', 'AI용어', '비즈니스', 'AG관련'] as const;
 type DictCategory = typeof CATEGORIES[number];
@@ -17,7 +19,7 @@ const CATEGORY_EMOJI: Record<string, string> = {
 };
 
 export default function DictionaryTab() {
-  const [terms, setTerms] = useLocalStorage<GlossaryTerm[]>('claude-master-glossary', []);
+  const [terms, setTerms] = useLocalStorage<GlossaryTerm[]>(STORAGE_KEYS.GLOSSARY, []);
   const [search, setSearch] = useState('');
   const [filterCategory, setFilterCategory] = useState<DictCategory>('전체');
   const [showForm, setShowForm] = useState(false);
@@ -179,7 +181,7 @@ export default function DictionaryTab() {
       ) : (
         <div className="space-y-2 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
           {filteredTerms.map(term => (
-            <div key={term.id} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 animate-fadeIn hover:bg-white/70 hover:shadow-xl hover:shadow-black/10 transition-all">
+            <GlassCard key={term.id} className="p-4 animate-fadeIn hover:bg-white/70 hover:shadow-xl hover:shadow-black/10 transition-all">
               <div className="flex items-start justify-between gap-2">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
@@ -205,7 +207,7 @@ export default function DictionaryTab() {
                   </button>
                 </div>
               </div>
-            </div>
+            </GlassCard>
           ))}
         </div>
       )}

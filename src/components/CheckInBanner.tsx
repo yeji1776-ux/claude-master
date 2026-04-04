@@ -2,6 +2,8 @@
 
 import { useMemo } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { STORAGE_KEYS } from '@/constants/storageKeys';
+import GlassCard from './ui/GlassCard';
 
 interface StudyActivity {
   id: string;
@@ -29,7 +31,7 @@ const GREETINGS = [
 ];
 
 export default function CheckInBanner() {
-  const [records, setRecords] = useLocalStorage<StudyRecord[]>('claude-master-study-records', []);
+  const [records, setRecords] = useLocalStorage<StudyRecord[]>(STORAGE_KEYS.STUDY_RECORDS, []);
 
   const today = new Date().toISOString().split('T')[0];
   const dayIndex = new Date().getDay();
@@ -88,7 +90,7 @@ export default function CheckInBanner() {
   };
 
   return (
-    <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-5">
+    <GlassCard className="p-5">
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1 min-w-0">
           <p className="text-gray-900 text-sm font-medium mb-1">{greeting}</p>
@@ -113,6 +115,6 @@ export default function CheckInBanner() {
           )}
         </div>
       </div>
-    </div>
+    </GlassCard>
   );
 }

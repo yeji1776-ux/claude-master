@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { agSections } from '@/data/agReference';
+import GlassCard from './ui/GlassCard';
 
 const ALL_TAGS = ['전체', '필수', '핵심', '기초', '추천', '유용', '중급', '고급', '인기', '무료', '유료', '강력'];
 
@@ -57,7 +58,7 @@ export default function AGReferenceTab() {
       {/* Sections */}
       <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
         {filteredSections.map(section => (
-          <div key={section.id} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 overflow-hidden">
+          <GlassCard key={section.id} className="overflow-hidden">
             <button
               onClick={() => setExpandedSection(expandedSection === section.id ? null : section.id)}
               className="w-full flex items-center justify-between p-4 text-left hover:bg-white/70 transition-all"
@@ -93,7 +94,7 @@ export default function AGReferenceTab() {
                 ))}
               </div>
             )}
-          </div>
+          </GlassCard>
         ))}
       </div>
     </div>

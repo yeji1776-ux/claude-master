@@ -1,11 +1,14 @@
 'use client';
 
 import { useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { tips } from '@/data/tips';
 import { useTimer } from '@/contexts/TimerContext';
+import { STORAGE_KEYS } from '@/constants/storageKeys';
 import ProgressCircle from './ProgressCircle';
 import CheckInBanner from './CheckInBanner';
+import GlassCard from './ui/GlassCard';
 
 interface HomePageProps {
   onTabChange: (tab: string, subTab?: string) => void;
@@ -21,11 +24,12 @@ const quickAccess = [
 ];
 
 export default function HomePage({ onTabChange }: HomePageProps) {
-  const [completedTips] = useLocalStorage<number[]>('claude-master-completed', []);
-  const [bookmarks] = useLocalStorage<number[]>('claude-master-bookmarks', []);
+  const router = useRouter();
+  const [completedTips] = useLocalStorage<number[]>(STORAGE_KEYS.COMPLETED, []);
+  const [bookmarks] = useLocalStorage<number[]>(STORAGE_KEYS.BOOKMARKS, []);
   const { isRunning, timeLeft, mode, todayMinutes } = useTimer();
 
-  const percentage = useMemo(() => Math.round((completedTips.length / 100) * 100), [completedTips]);
+  const percentage = useMemo(() => Math.round((completedTips.length / tips.length) * 100), [completedTips]);
 
   const recentBookmarks = useMemo(() => {
     return bookmarks.slice(-3).reverse().map(id => tips.find(t => t.id === id)).filter(Boolean);
@@ -56,24 +60,24 @@ export default function HomePage({ onTabChange }: HomePageProps) {
       {/* Progress Circle + Quick Stats side by side on desktop */}
       <div className="md:flex md:gap-6 md:items-center">
         {/* Progress Circle */}
-        <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-6 md:flex-1">
-          <ProgressCircle completed={completedTips.length} total={100} />
-        </div>
+        <GlassCard className="p-6 md:flex-1">
+          <ProgressCircle completed={completedTips.length} total={tips.length} />
+        </GlassCard>
 
         {/* Quick Stats */}
         <div className="grid grid-cols-3 gap-3 mt-5 md:mt-0 md:flex md:flex-col md:gap-3 md:w-48">
-          <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-3 text-center">
+          <GlassCard className="p-3 text-center">
             <p className="text-xl font-bold text-amber-600">{completedTips.length}</p>
             <p className="text-[11px] text-gray-400 mt-0.5">완료한 팁</p>
-          </div>
-          <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-3 text-center">
+          </GlassCard>
+          <GlassCard className="p-3 text-center">
             <p className="text-xl font-bold text-emerald-600">{todayMinutes}<span className="text-xs">분</span></p>
             <p className="text-[11px] text-gray-400 mt-0.5">오늘 집중</p>
-          </div>
-          <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-3 text-center">
+          </GlassCard>
+          <GlassCard className="p-3 text-center">
             <p className="text-xl font-bold text-purple-600">{bookmarks.length}</p>
             <p className="text-[11px] text-gray-400 mt-0.5">북마크</p>
-          </div>
+          </GlassCard>
         </div>
       </div>
 
@@ -122,7 +126,7 @@ export default function HomePage({ onTabChange }: HomePageProps) {
             {recentBookmarks.map(tip => tip && (
               <button
                 key={tip.id}
-                onClick={() => { window.location.href = `/tip/${tip.id}`; }}
+                onClick={() => { router.push(`/tip/${tip.id}`); }}
                 className="w-full bg-white/60 backdrop-blur-xl border border-white/80 rounded-xl shadow-sm p-3 text-left hover:bg-white/70 hover:shadow-xl hover:shadow-black/10 transition-all"
               >
                 <div className="flex items-center gap-3">

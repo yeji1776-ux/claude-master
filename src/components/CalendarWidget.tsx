@@ -2,9 +2,11 @@
 
 import { useState, useMemo } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { STORAGE_KEYS } from '@/constants/storageKeys';
+import GlassCard from './ui/GlassCard';
 
 export default function CalendarWidget() {
-  const [completedTips] = useLocalStorage<number[]>('claude-master-completed', []);
+  const [completedTips] = useLocalStorage<number[]>(STORAGE_KEYS.COMPLETED, []);
   const [currentDate] = useState(new Date());
 
   const year = currentDate.getFullYear();
@@ -39,7 +41,7 @@ export default function CalendarWidget() {
       {/* Calendar + Stats side by side on desktop */}
       <div className="md:flex md:gap-6">
         {/* Calendar */}
-        <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 md:flex-1">
+        <GlassCard className="p-4 md:flex-1">
           <h3 className="text-center text-sm font-semibold text-gray-900 mb-4">{monthName}</h3>
 
           <div className="grid grid-cols-7 gap-1 mb-2">
@@ -83,18 +85,18 @@ export default function CalendarWidget() {
               <span className="text-gray-400">학습 완료</span>
             </div>
           </div>
-        </div>
+        </GlassCard>
 
         {/* Activity Stats */}
         <div className="grid grid-cols-2 gap-3 mt-4 md:mt-0 md:flex md:flex-col md:gap-3 md:w-48">
-          <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 text-center">
+          <GlassCard className="p-4 text-center">
             <p className="text-2xl font-bold text-amber-600">{completedTips.length}</p>
             <p className="text-xs text-gray-400 mt-1">총 완료 팁</p>
-          </div>
-          <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 text-center">
+          </GlassCard>
+          <GlassCard className="p-4 text-center">
             <p className="text-2xl font-bold text-emerald-600">{activeDays.size}</p>
             <p className="text-xs text-gray-400 mt-1">이번 달 학습일</p>
-          </div>
+          </GlassCard>
         </div>
       </div>
     </div>

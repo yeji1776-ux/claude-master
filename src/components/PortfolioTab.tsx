@@ -4,9 +4,11 @@ import { useMemo } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { tips } from '@/data/tips';
 import { Category, CATEGORY_COLORS } from '@/types';
+import { STORAGE_KEYS } from '@/constants/storageKeys';
+import GlassCard from './ui/GlassCard';
 
 export default function PortfolioTab() {
-  const [completedTips] = useLocalStorage<number[]>('claude-master-completed', []);
+  const [completedTips] = useLocalStorage<number[]>(STORAGE_KEYS.COMPLETED, []);
 
   const stats = useMemo(() => {
     const categories = Object.keys(CATEGORY_COLORS) as Category[];
@@ -18,7 +20,7 @@ export default function PortfolioTab() {
     });
   }, [completedTips]);
 
-  const totalPercentage = Math.round((completedTips.length / 100) * 100);
+  const totalPercentage = Math.round((completedTips.length / tips.length) * 100);
 
   const level = useMemo(() => {
     if (totalPercentage >= 90) return { name: '마스터', emoji: '👑' };
@@ -53,7 +55,7 @@ export default function PortfolioTab() {
         <h2 className="text-gray-700 text-sm font-semibold mb-3">카테고리별 성과</h2>
         <div className="space-y-3 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
           {stats.map(stat => (
-            <div key={stat.category} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4">
+            <GlassCard key={stat.category} className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm text-gray-600">{stat.category}</span>
                 <span className="text-sm font-bold" style={{ color: stat.color }}>{stat.percentage}%</span>
@@ -65,7 +67,7 @@ export default function PortfolioTab() {
                 />
               </div>
               <p className="text-xs text-gray-400 mt-1">{stat.completed}/{stat.total} 완료</p>
-            </div>
+            </GlassCard>
           ))}
         </div>
       </div>

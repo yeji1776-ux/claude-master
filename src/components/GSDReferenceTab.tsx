@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { gsdCategories, GSD_WORKFLOW_STEPS } from '@/data/gsdReference';
+import GlassCard from './ui/GlassCard';
 
 const ALL_TAGS = ['전체', '필수', '핵심', '계획', '실행', '검증', '배포', '자동', '편리', '빠른실행', '관리', '고급', '세션'];
 
@@ -74,7 +75,7 @@ export default function GSDReferenceTab() {
       {/* Categories */}
       <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
         {filteredCategories.map(cat => (
-          <div key={cat.id} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 overflow-hidden">
+          <GlassCard key={cat.id} className="overflow-hidden">
             <button
               onClick={() => setExpandedCategory(expandedCategory === cat.id ? null : cat.id)}
               className="w-full flex items-center justify-between p-4 text-left hover:bg-white/70 transition-all"
@@ -117,7 +118,7 @@ export default function GSDReferenceTab() {
                 ))}
               </div>
             )}
-          </div>
+          </GlassCard>
         ))}
       </div>
     </div>

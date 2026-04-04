@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { STORAGE_KEYS } from '@/constants/storageKeys';
+import GlassCard from './ui/GlassCard';
 
 interface Memo {
   id: string;
@@ -10,7 +12,7 @@ interface Memo {
 }
 
 export default function MemoTab() {
-  const [memos, setMemos] = useLocalStorage<Memo[]>('claude-master-memos', []);
+  const [memos, setMemos] = useLocalStorage<Memo[]>(STORAGE_KEYS.MEMOS, []);
   const [newMemo, setNewMemo] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState('');
@@ -57,7 +59,7 @@ export default function MemoTab() {
       </div>
 
       {/* New Memo Input */}
-      <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 space-y-3">
+      <GlassCard className="p-4 space-y-3">
         <textarea
           placeholder="메모를 입력하세요..."
           value={newMemo}
@@ -72,7 +74,7 @@ export default function MemoTab() {
         >
           메모 저장
         </button>
-      </div>
+      </GlassCard>
 
       {/* Memo List */}
       {memos.length === 0 ? (
@@ -83,7 +85,7 @@ export default function MemoTab() {
       ) : (
         <div className="space-y-2 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-3 md:space-y-0">
           {memos.map(memo => (
-            <div key={memo.id} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 hover:bg-white/70 hover:shadow-xl hover:shadow-black/10 transition-all">
+            <GlassCard key={memo.id} className="p-4 hover:bg-white/70 hover:shadow-xl hover:shadow-black/10 transition-all">
               {editingId === memo.id ? (
                 <div className="space-y-2">
                   <textarea
@@ -109,7 +111,7 @@ export default function MemoTab() {
                   </div>
                 </>
               )}
-            </div>
+            </GlassCard>
           ))}
         </div>
       )}

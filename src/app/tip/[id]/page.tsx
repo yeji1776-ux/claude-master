@@ -5,14 +5,16 @@ import { useRouter } from 'next/navigation';
 import { tips } from '@/data/tips';
 import { CATEGORY_COLORS } from '@/types';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { STORAGE_KEYS } from '@/constants/storageKeys';
+import GlassCard from '@/components/ui/GlassCard';
 
 export default function TipPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
   const tipId = parseInt(id);
   const tip = tips.find(t => t.id === tipId);
-  const [completedTips, setCompletedTips] = useLocalStorage<number[]>('claude-master-completed', []);
-  const [bookmarks, setBookmarks] = useLocalStorage<number[]>('claude-master-bookmarks', []);
+  const [completedTips, setCompletedTips] = useLocalStorage<number[]>(STORAGE_KEYS.COMPLETED, []);
+  const [bookmarks, setBookmarks] = useLocalStorage<number[]>(STORAGE_KEYS.BOOKMARKS, []);
   const [quizAnswer, setQuizAnswer] = useState<'bad' | 'good' | null>(null);
   const [showQuizResult, setShowQuizResult] = useState(false);
 
@@ -106,10 +108,10 @@ export default function TipPage({ params }: { params: Promise<{ id: string }> })
       </div>
 
       {/* Lesson */}
-      <section className="mb-6 bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4">
+      <GlassCard className="mb-6 p-4">
         <h2 className="text-sm font-semibold text-amber-700 mb-2">📖 쉬운 설명</h2>
         <p className="text-sm text-gray-600 leading-relaxed">{tip.lesson}</p>
-      </section>
+      </GlassCard>
 
       {/* Bad + Good Examples - side by side on desktop */}
       <div className="md:grid md:grid-cols-2 md:gap-4 mb-6">
@@ -137,7 +139,7 @@ export default function TipPage({ params }: { params: Promise<{ id: string }> })
       </section>
 
       {/* Quiz */}
-      <section className="mb-6 bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4">
+      <GlassCard className="mb-6 p-4">
         <h2 className="text-sm font-semibold text-amber-700 mb-3">🧠 퀴즈: 어떤 프롬프트가 더 효과적일까?</h2>
         <div className="space-y-3 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
           {quizOrder.map((type, index) => {
@@ -180,7 +182,7 @@ export default function TipPage({ params }: { params: Promise<{ id: string }> })
             다시 풀기
           </button>
         )}
-      </section>
+      </GlassCard>
 
       {/* Complete Button */}
       <button

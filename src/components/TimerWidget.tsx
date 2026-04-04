@@ -1,6 +1,7 @@
 'use client';
 
 import { useTimer } from '@/contexts/TimerContext';
+import GlassCard from './ui/GlassCard';
 
 const FOCUS_TIME = 25 * 60;
 const BREAK_TIME = 5 * 60;
@@ -21,7 +22,7 @@ export default function TimerWidget() {
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-6">
+    <GlassCard className="p-6">
       <div className="flex flex-col items-center gap-4">
         {/* Mode indicator */}
         <div className="flex items-center gap-2">
@@ -130,6 +131,6 @@ export default function TimerWidget() {
           </div>
         </div>
       </div>
-    </div>
+    </GlassCard>
   );
 }

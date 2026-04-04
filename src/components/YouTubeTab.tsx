@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import GlassCard from './ui/GlassCard';
 
 interface VideoItem {
   id: string;
@@ -52,7 +53,7 @@ export default function YouTubeTab() {
       {/* Video List */}
       <div className="space-y-3 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-4 md:space-y-0">
         {filteredVideos.map(video => (
-          <div key={video.id} className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4 hover:bg-white/70 hover:shadow-xl hover:shadow-black/10 transition-all">
+          <GlassCard key={video.id} className="p-4 hover:bg-white/70 hover:shadow-xl hover:shadow-black/10 transition-all">
             <div className="flex items-start gap-3">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-50/80 text-red-500">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -67,7 +68,7 @@ export default function YouTubeTab() {
                 </span>
               </div>
             </div>
-          </div>
+          </GlassCard>
         ))}
       </div>
 

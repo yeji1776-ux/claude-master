@@ -9,10 +9,12 @@ import CategoryProgress from './CategoryProgress';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { tips } from '@/data/tips';
 import { Category, CATEGORY_COLORS } from '@/types';
+import { STORAGE_KEYS } from '@/constants/storageKeys';
+import GlassCard from './ui/GlassCard';
 
 export default function LearningTab() {
   const router = useRouter();
-  const [completedTips] = useLocalStorage<number[]>('claude-master-completed', []);
+  const [completedTips] = useLocalStorage<number[]>(STORAGE_KEYS.COMPLETED, []);
   const [activeWeek, setActiveWeek] = useState<number | null>(null);
 
   const weekTips = useMemo(() => {
@@ -49,11 +51,11 @@ export default function LearningTab() {
       {/* Progress Circle + Category Progress side by side on desktop */}
       <div className="md:flex md:gap-8 md:items-start">
         <div className="md:flex-1">
-          <ProgressCircle completed={completedTips.length} total={100} />
+          <ProgressCircle completed={completedTips.length} total={tips.length} />
         </div>
-        <div className="mt-6 md:mt-0 md:flex-1 bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-lg shadow-black/5 p-4">
+        <GlassCard className="mt-6 md:mt-0 md:flex-1 p-4">
           <CategoryProgress categoryStats={categoryStats} />
-        </div>
+        </GlassCard>
       </div>
 
       {/* Week Cards */}

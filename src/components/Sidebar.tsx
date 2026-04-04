@@ -1,17 +1,11 @@
 'use client';
 
+import { NAV_TABS } from '@/constants/navTabs';
+
 interface SidebarProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
 }
-
-const tabs = [
-  { id: 'home', emoji: '🏠', label: '홈' },
-  { id: 'learn', emoji: '📚', label: '학습' },
-  { id: 'reference', emoji: '🛸', label: '참고' },
-  { id: 'tools', emoji: '🛠️', label: '도구' },
-  { id: 'my', emoji: '👤', label: '마이' },
-];
 
 export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
   return (
@@ -27,7 +21,7 @@ export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
 
       {/* Nav Items */}
       <nav className="flex-1 space-y-2 w-full">
-        {tabs.map(tab => (
+        {NAV_TABS.map(tab => (
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}

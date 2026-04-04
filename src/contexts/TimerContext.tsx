@@ -1,5 +1,7 @@
 'use client';
 import { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { STORAGE_KEYS } from '@/constants/storageKeys';
 
 const FOCUS_TIME = 25 * 60;
 const BREAK_TIME = 5 * 60;
@@ -20,26 +22,18 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   const [mode, setMode] = useState<'focus' | 'break'>('focus');
   const [timeLeft, setTimeLeft] = useState(FOCUS_TIME);
   const [isRunning, setIsRunning] = useState(false);
-  const [todayMinutes, setTodayMinutes] = useState(0);
+  const [timerDate, setTimerDate] = useLocalStorage<string>(STORAGE_KEYS.TIMER_DATE, '');
+  const [todayMinutes, setTodayMinutes] = useLocalStorage<number>(STORAGE_KEYS.TIMER_TODAY, 0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Load today's minutes from localStorage
+  // Reset today's minutes if the date has changed
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
-    const savedDate = localStorage.getItem('claude-master-timer-date');
-    if (savedDate === today) {
-      const saved = localStorage.getItem('claude-master-timer-today');
-      if (saved) setTodayMinutes(parseInt(saved));
-    } else {
-      localStorage.setItem('claude-master-timer-date', today);
-      localStorage.setItem('claude-master-timer-today', '0');
+    if (timerDate !== today) {
+      setTimerDate(today);
+      setTodayMinutes(0);
     }
-  }, []);
-
-  // Save todayMinutes
-  useEffect(() => {
-    localStorage.setItem('claude-master-timer-today', todayMinutes.toString());
-  }, [todayMinutes]);
+  }, [timerDate, setTimerDate, setTodayMinutes]);
 
   // Timer interval
   useEffect(() => {
